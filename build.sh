@@ -19,6 +19,8 @@ run_hook() {
 	fi
 }
 
+print_msg ">>> CUSTOM SCRIPT !"
+
 #
 # Detect docker credentials for pulling private images and for pushing the built image
 #
