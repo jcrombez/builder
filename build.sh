@@ -162,14 +162,19 @@ TEST=${TEST:-"Tests passed in $(($DATE_DIFF / 60)) minutes and $(($DATE_DIFF % 6
 # (3/3) Push step
 #
 START_DATE=$(date +"%s")
+print_msg "   >>> Push 1"
 if [ ! -z "$IMAGE_NAME" ]; then
+print_msg "   >>> Push 2"
 	if [ ! -z "$USERNAME" ] || [ -f /root/.dockercfg ] || [ -f /root/.docker/config.json ]; then
+	print_msg "   >>> Push 3"
 		print_msg "=> Pushing image $IMAGE_NAME"
 		run_hook pre_push
 		if [ -f "hooks/push" ]; then
 			run_hook push
 		else
+			print_msg "   >>> Push 4"
 			docker tag -f this $IMAGE_NAME
+			print_msg "   >>> Push 5"
 			docker push $IMAGE_NAME
 			# docker push $IMAGE_NAME 2>&1 | tee /tmp/push-result || true
 			# while cat /tmp/push-result | grep -q "is already in progress"; do
@@ -186,6 +191,7 @@ if [ ! -z "$IMAGE_NAME" ]; then
 	fi
 else
 	PUSH="Skipping push"
+	print_msg "   >>> Push skipped"
 	print_msg "   $PUSH"
 fi
 END_DATE=$(date +"%s")
